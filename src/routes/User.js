@@ -1,5 +1,10 @@
-const {register} = require ("../functions/User");
+const {register, activateAccount,login,forgetPassword,resetPassword,updatePassword} = require ("../functions/User");
 const express = require('express');
 const router = express.Router();
 router.post('/register', register);
+router.patch('/activateAccount/', activateAccount);
+router.post('/login', login);
+router.patch('/forgetPassword', forgetPassword);
+router.patch('/resetPassword', resetPassword);
+router.patch('/updatePassword', updatePassword);
 module.exports = router;
