@@ -3,10 +3,11 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const Animal = require('../models/animl');
 
-exports.showallanimal = (req, res) =>{
+exports.showallanimal = (req, res,next) =>{
     Animal.find().exec().then(animal => {
         console.log(animal);
         res.status(200).json(animal);
+        return next();
     }).catch(error => {
         console.log(error);
         res.status(error.code).json({error: error});

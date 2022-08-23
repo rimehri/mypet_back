@@ -2,6 +2,7 @@ const express = require ('express');
 
 const mongoose = require("mongoose");
 const animalroute = require ('./src/routes/animal');
+const winston = require ('winston');
 const userroute = require ('./src/routes/User');
 const app = express();
 const PORT  = process.env.PORT || 3000
@@ -12,7 +13,20 @@ app.use(express.urlencoded({extended:true}));
 //routes
 app.use('/animals',animalroute);
 app.use('/user',userroute);
-
+const logger = winston.createLogger({
+    level:'info',
+    transports: [
+        new winston.transports.Console({
+            format:winston.format.combine(
+                winston.format.colorize({all:true})
+            )
+        }),
+        new winston.transports.File({filename:'error.log',level:'error'})
+    ],
+    exceptionHandlers:[
+        new winston.transports.File({filename:'exception.log'})
+    ]
+});
 //connect to mongodb atlas
 mongoose.connect(process.env.MONGO_URL,
 
@@ -23,12 +37,13 @@ mongoose.connect(process.env.MONGO_URL,
 }
 
 ).then(()=>{
-console.log("Connecte to Mongodb atlas");
+logger.info("connected to mongodb atlas");
 
 }).catch(error=>{
-    console.log("Somthing happened",error);
+    logger.error(error.message);
+    
 })
 app.listen(PORT,()=>{
 
-    console.log("Server start at PORT ",PORT);
+    logger.info(`Server start at PORT ${PORT}`);
 });
