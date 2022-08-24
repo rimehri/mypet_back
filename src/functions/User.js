@@ -156,3 +156,17 @@ exports.updatePassword = async (req, res) => {
         return res.status(200).json({ message: "Password updated successfully" });
     });
 };
+exports.deleteAccount = (req, res) => {
+    const id = req.body.id;
+    User.remove({ _id: id })
+        .exec()
+        .then((result) => {
+            return res.status(200).json(result);
+        })
+        .catch((error) => {
+            return res.status(error.code).json({ error: error });
+        });
+};
+exports.getUser = (req, res) => {
+    searchUser(req, res, req.params.id);
+};
