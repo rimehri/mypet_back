@@ -1,4 +1,4 @@
-const {register, activateAccount,login,forgetPassword,resetPassword,updatePassword,deleteAccount,getUser} = require ("../functions/User");
+const {register, activateAccount,login,forgetPassword,resetPassword,updatePassword,deleteAccount,getUser,updateProfile} = require ("../functions/User");
 const express = require('express');
 const router = express.Router();
 router.post('/register', register);
@@ -9,4 +9,5 @@ router.patch('/resetPassword', resetPassword);
 router.patch('/updatePassword', updatePassword);
 router.delete('/deleteAccount', deleteAccount);
 router.get('/getUser/:id', getUser);
+router.patch('/updateProfile',  updateProfile);
 module.exports = router;

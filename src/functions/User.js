@@ -47,7 +47,7 @@ exports.register = async (req, res) => {
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 10),
         Name: req.body.Name,
-        addresse: req.body.addresse,
+        add: req.body.add,
         phone:req.body.phone,
 
       
@@ -67,6 +67,7 @@ exports.register = async (req, res) => {
         sendsms(req.body.phone.toString(),'Here is your verification code: ' + resetCode);
         return res.status(201).json(newUser);
     }
+    
 };
 function sendmail(mailOptions) {
     transporter.sendMail(mailOptions, async function (error, info) {
@@ -169,4 +170,25 @@ exports.deleteAccount = (req, res) => {
 };
 exports.getUser = (req, res) => {
     searchUser(req, res, req.params.id);
+};
+exports.updateProfile = (req, res) => {
+ 
+    User.findOneAndUpdate({ _id: req.body.id },
+    
+        {
+            $set: {
+                Name:req.body.Name,
+               phone:req.body.phone
+                
+            },
+           
+        },
+        function (error, result) {
+            if (error) {
+                console.log(error.message);
+                 res.status(error.code).json({ error: error });
+            }
+            res.status(200).json(result);
+            
+        });
 };
