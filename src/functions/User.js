@@ -179,7 +179,7 @@ exports.updateProfile = (req, res) => {
             $set: {
                 Name:req.body.Name,
                phone:req.body.phone,
-               gendre:req.body.gender
+               gender:req.body.gender
                 
             },
            
