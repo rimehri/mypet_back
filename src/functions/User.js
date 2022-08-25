@@ -47,7 +47,7 @@ exports.register = async (req, res) => {
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 10),
         Name: req.body.Name,
-        add: req.body.add,
+        addresse: req.body.addresse,
         phone:req.body.phone,
 
       
