@@ -44,12 +44,11 @@ exports.register = async (req, res) => {
     const resetCode = Math.floor(Math.random() * 9999);
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
-        email: req.body.email,
+       
         password: bcrypt.hashSync(req.body.password, 10),
         Name: req.body.Name,
         phone:req.body.phone,
-        addresse:req.body.addresse,
-        gender: req.body.gender,
+       
      resetCode: resetCode
     });
     const newUser = await user.save();
