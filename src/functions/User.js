@@ -47,14 +47,10 @@ exports.register = async (req, res) => {
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 10),
         Name: req.body.Name,
-        add: req.body.add,
         phone:req.body.phone,
-
-      
+        addresse:req.body.addresse,
         gender: req.body.gender,
-        
-    
-        resetCode: resetCode
+     resetCode: resetCode
     });
     const newUser = await user.save();
     if (newUser) {
