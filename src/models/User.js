@@ -4,8 +4,8 @@ const userSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   Name: { type: String, require: false },
   gender: { type: String, require: false },
-  add: { type: String, require: false },
-
+ 
+  addresse:{ type:String },
   phone: { type: Number },
   email: { type: String, require: false, unique: true, lowercase: true },
   password: { type: String, require: false },

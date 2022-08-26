@@ -47,26 +47,22 @@ exports.register = async (req, res) => {
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 10),
         Name: req.body.Name,
-        add: req.body.add,
         phone:req.body.phone,
-
-      
+        addresse:req.body.addresse,
         gender: req.body.gender,
-        
-    
-        resetCode: resetCode
+     resetCode: resetCode
     });
     const newUser = await user.save();
-    /*if (newUser) {
-       let mailOptions = {
+    if (newUser) {
+      /* let mailOptions = {
             from: 'rimeh.berrichi@esprit.tn',
             to: req.body.email,
             subject: 'Verify your Account',
             text: 'Here is your verification code: ' + resetCode
-        };
-        sendsms(req.body.phone.toString(),'Here is your verification code: ' + resetCode); */
+        };*/
+        sendsms(req.body.phone.toString(),'Here is your verification code: ' + resetCode); 
         return res.status(201).json(newUser);
-    
+    }
     
 };
 function sendmail(mailOptions) {
