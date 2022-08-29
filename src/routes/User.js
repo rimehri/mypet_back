@@ -1,4 +1,4 @@
-const {register, activateAccount,login,forgetPassword,resetPassword,updatePassword,deleteAccount,getUser,updateProfile} = require ("../functions/User");
+const {register, activateAccount,login,forgetPassword,resetPassword,updatePassword,deleteAccount,getUser,updateProfile,addanim,editeanimal,removeanimal} = require ("../functions/User");
 const express = require('express');
 const router = express.Router();
 router.post('/register', register);
@@ -10,4 +10,7 @@ router.patch('/updatePassword', updatePassword);
 router.delete('/deleteAccount', deleteAccount);
 router.get('/getUser/:id', getUser);
 router.patch('/updateProfile',  updateProfile);
+router.post('/addanim',addanim);
+router.patch('/editeanimal',editeanimal);
+router.delete('/removeanimal',removeanimal);
 module.exports = router;
