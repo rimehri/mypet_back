@@ -63,7 +63,12 @@ exports.register = async (req, res) => {
             text: 'Here is your verification code: ' + resetCode
         };*/
        // sendsms(req.body.phone.toString(),'Here is your verification code: ' + resetCode); 
-        return res.status(201).json(newUser);}
+        return res.status(201).json(newUser);
+    
+    }
+    {
+        logger.error("habesh");
+    }
         
         
     
