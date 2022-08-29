@@ -50,7 +50,9 @@ exports.register = async (req, res) => {
         phone:req.body.phone,
         addresse:req.body.addresse,
         gender: req.body.gender,
-     resetCode: resetCode
+        
+    
+        resetCode: resetCode
     });
     const newUser = await user.save();
     if (newUser) {
@@ -60,9 +62,11 @@ exports.register = async (req, res) => {
             subject: 'Verify your Account',
             text: 'Here is your verification code: ' + resetCode
         };*/
-        sendsms(req.body.phone.toString(),'Here is your verification code: ' + resetCode); 
-        return res.status(201).json(newUser);
-    }
+       // sendsms(req.body.phone.toString(),'Here is your verification code: ' + resetCode); 
+        return res.status(201).json(newUser);}
+        
+        
+    
     
 };
 function sendmail(mailOptions) {
@@ -188,5 +192,72 @@ exports.updateProfile = (req, res) => {
             }
             res.status(200).json(result);
             
+        });
+};
+exports.addanim = (req, res) => {
+  
+
+    User.findOneAndUpdate({ _id: req.body.id }, {
+        $addToSet: {
+            animal: [{
+                _id: new mongoose.Types.ObjectId(),
+                name: req.body.name,
+                genre: req.body.genre,
+                date_naissance: req.body.date_naissance,
+                etat_sante: req.body.etat_sante,
+                poids: req.body.poids,
+                taille: req.body.taille,
+                race: req.body.race,
+                Description: req.body.Description,
+                type_animal: {
+                    typename: req.body.typename,
+                  },
+
+            }],
+        }
+    }, function (error, result) {
+        if (error) {
+            console.log(req.body);
+            return res.status(error.code).json({ error: error });
+        }
+        return res.status(200).json(result);
+    });
+};
+exports.editeanimal = (req, res) => {
+    
+    User.findOneAndUpdate({ _id: req.body.id, 'animal._id': req.body.animal }, {
+        $set: {
+            'animal.$.name': req.body.name,
+            'animal.$.genre': req.body.genre,
+            'animal.$.date_de_naissance': req.body.date_naissance,
+            'animal.$.type_animal': {
+                typename: req.body.typename,
+               
+            },
+            'animal.$.etat_sante': req.body.etat_sante,
+            'animal.$.poids': req.body.poids,
+            'animal.$.taille': req.body.taille,
+            'animal.$.race': req.body.race,
+            'animal.$.Description': req.body.Description,
+
+            
+        }
+    }, function (error, result) {
+        if (error) {
+            return res.status(error.code).json({ error: error });
+        }
+        //  console.log(updateOptions);
+        return res.status(200).json(result);
+    });
+};
+exports.removeanimal = (req, res) => {
+    User.findOneAndUpdate(
+        { _id: req.body.id },
+        { $pull: { animal: { _id: req.body.animal } } },
+        function (error, result) {
+            if (error) {
+                return res.status(error.code).json({ error: error });
+            }
+            return res.status(200).json(result);
         });
 };
