@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const TypeAnimal = require ('../models/type_animal');
+
 const userSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   Name: { type: String, require: false },
@@ -52,6 +53,9 @@ const userSchema = mongoose.Schema({
       
   },
   type_animal :TypeAnimal.schema,
+}],
+role:[{
+rolename: {type:String},
 }],
   image: { type: String, default: "avatar.jpeg" },
   resetCode: { type: Number, require: false },

@@ -10,7 +10,7 @@ const path = require("path");
 
 const { loggers } = require('winston');
 var sid ='ACcdf6c386721ee79115b1c1b4654bb20b';
-var auth_token = '5aa1b778bc11750c1f37bd99760822a3';
+var auth_token = '772ef6d587838616856a095bb150bd92';
 const twilio = require('twilio')(sid,auth_token);
 const sendsms= (phone,message)=>{
     twilio.messages.create({
@@ -18,7 +18,7 @@ from:'+12243282744',
 to  :'+216'+phone,
 body:message
 
-}).then((res)=>loggers.info("message has sent!")).catch((err)=>{
+}).then((res)=>logger.info("message has sent!")).catch((err)=>{
     logger.error(err)
 })}
 
@@ -38,8 +38,9 @@ const transporter = mailer.createTransport({
 /** Auth functions **/
 exports.register = async (req, res) => {
     const PhoneExist = await User.findOne({ phone: req.body.phone });
-    if (PhoneExist) {
-        return res.status(400).json({ message: 'Phone exist' });
+    const EmailExist = await User.findOne({ email: req.body.email });
+    if (PhoneExist ||  EmailExist)  {
+        return res.status(400).json({ message: 'Phone exist or email existe' });
     }
     const resetCode = Math.floor(Math.random() * 9999);
     const user = new User({
@@ -50,6 +51,9 @@ exports.register = async (req, res) => {
         phone:req.body.phone,
         addresse:req.body.addresse,
         gender: req.body.gender,
+        role:{
+            rolename: req.body.rolename,
+          },
         
     
         resetCode: resetCode
@@ -62,7 +66,7 @@ exports.register = async (req, res) => {
             subject: 'Verify your Account',
             text: 'Here is your verification code: ' + resetCode
         };*/
-       // sendsms(req.body.phone.toString(),'Here is your verification code: ' + resetCode); 
+        sendsms(req.body.phone.toString(),'Here is your verification code: ' + resetCode); 
         return res.status(201).json(newUser);
     
     }
