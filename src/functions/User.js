@@ -189,6 +189,10 @@ exports.getUser = (req, res) => {
     searchUser(req, res, req.params.id);
 };
 exports.updateProfile = (req, res) => {
+    var imageLink = "";
+    if (req.file) {
+        imageLink = process.env.BASE_URL + "uploads/" + req.file.filename;
+    }
  
     User.findOneAndUpdate({ _id: req.body.id },
     
@@ -197,7 +201,8 @@ exports.updateProfile = (req, res) => {
                 Name:req.body.Name,
                phone:req.body.phone,
                gender:req.body.gender,
-               email:req.body.email
+               email:req.body.email,
+               image:imageLink
                 
             },
            
@@ -225,6 +230,7 @@ exports.addanim = (req, res) => {
                 poids: req.body.poids,
                 taille: req.body.taille,
                 race: req.body.race,
+              
                 Description: req.body.Description,
                 type_animal: {
                     typename: req.body.typename,

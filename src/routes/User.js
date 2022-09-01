@@ -1,5 +1,6 @@
 const {register, activateAccount,login,forgetPassword,resetPassword,updatePassword,deleteAccount,getUser,updateProfile,addanim,editeanimal,removeanimal} = require ("../functions/User");
 const express = require('express');
+const { upload } = require("../utils/multerConfig");
 const router = express.Router();
 router.post('/register', register);
 router.patch('/activateAccount/', activateAccount);
@@ -9,7 +10,7 @@ router.patch('/resetPassword', resetPassword);
 router.patch('/updatePassword', updatePassword);
 router.delete('/deleteAccount', deleteAccount);
 router.get('/getUser/:id', getUser);
-router.patch('/updateProfile',  updateProfile);
+router.patch('/updateProfile', upload.single('image'), updateProfile);
 router.post('/addanim',addanim);
 router.patch('/editeanimal',editeanimal);
 router.delete('/removeanimal',removeanimal);
