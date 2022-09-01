@@ -7,8 +7,7 @@ const userroute = require ('./src/routes/User');
 const app = express();
 const PORT  = process.env.PORT || 5000
 require('dotenv').config();
-var sid ='ACcdf6c386721ee79115b1c1b4654bb20b';
-var auth_token = '5aa1b778bc11750c1f37bd99760822a3';
+
 
 //middlewares
 app.use(express.json());

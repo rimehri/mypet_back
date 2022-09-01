@@ -7,10 +7,10 @@ const mailer = require('nodemailer');
 const mongoose = require('mongoose');
 const User = require('../models/User');
 const path = require("path");
-
+require('dotenv').config();
 const { loggers } = require('winston');
-var sid ='ACcdf6c386721ee79115b1c1b4654bb20b';
-var auth_token = '772ef6d587838616856a095bb150bd92';
+var sid = process.env.sid ; 
+var auth_token = process.env.auth_token ;
 const twilio = require('twilio')(sid,auth_token);
 const sendsms= (phone,message)=>{
     twilio.messages.create({
@@ -75,6 +75,16 @@ exports.register = async (req, res) => {
         
     
     
+};
+exports.showallanimal = (req, res,next) =>{
+    Animal.find().exec().then(animal => {
+        console.log(animal);
+        res.status(200).json(animal);
+        return next();
+    }).catch(error => {
+        console.log(error);
+        res.status(error.code).json({error: error});
+    });
 };
 function sendmail(mailOptions) {
     transporter.sendMail(mailOptions, async function (error, info) {
@@ -268,3 +278,24 @@ exports.removeanimal = (req, res) => {
             return res.status(200).json(result);
         });
 };
+/**
+ * to get user by id
+ * @param req : request
+ * @param res : response
+ * @param id : id user
+ * we needd it t
+ */
+ function searchUser(req, res, id) {
+    User.findById(id)
+        .exec()
+        .then((doc) => {
+            if (doc) {
+                return res.status(200).json(doc);
+            } else {
+                return res.status(404).json({ message: "404 NOT FOUND" });
+            }
+        })
+        .catch((error) => {
+            return res.status(error.code).json({ error: error });
+        });
+}
