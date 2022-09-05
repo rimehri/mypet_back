@@ -52,12 +52,13 @@ const userSchema = mongoose.Schema({
       require:false,
       
   },
+  image: { type: String, default: "animal.png" },
   type_animal :TypeAnimal.schema,
 }],
 role:[{
 rolename: {type:String},
 }],
-  image: { type: String, default: "avatar.jpeg" },
+  image: { type: String, default: "animal.png" },
   resetCode: { type: Number, require: false },
   isActive: { type: Boolean, default: false },
 });

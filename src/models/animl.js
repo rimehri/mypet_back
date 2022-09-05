@@ -42,6 +42,11 @@ const AnimalSchema = new mongoose.Schema({
         require:false,
         
     },
+    imageanimal:{
+        type:String,
+        require:false,
+        
+    },
  type_animal :TypeAnimal.schema,
 
 

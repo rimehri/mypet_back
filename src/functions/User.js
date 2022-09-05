@@ -6,6 +6,7 @@ const router = express.Router();
 const mailer = require('nodemailer');
 const mongoose = require('mongoose');
 const User = require('../models/User');
+const ejs = require('ejs');  
 const path = require("path");
 require('dotenv').config();
 const { loggers } = require('winston');
@@ -75,6 +76,16 @@ exports.register = async (req, res) => {
         
     
     
+};
+exports.showalluser = (req, res,next) =>{
+    User.find().exec().then(user => {
+        console.log(user);
+        res.status(200).json(user);
+        return next();
+    }).catch(error => {
+        console.log(error);
+        res.status(error.code).json({error: error});
+    });
 };
 exports.showallanimal = (req, res,next) =>{
     Animal.find().exec().then(animal => {
@@ -217,6 +228,11 @@ exports.updateProfile = (req, res) => {
         });
 };
 exports.addanim = (req, res) => {
+    var imageLink = "";
+    if (req.file) {
+        imageLink = process.env.BASE_URL + "uploads/" + req.file.filename;
+    }
+ 
   
 
     User.findOneAndUpdate({ _id: req.body.id }, {
@@ -230,7 +246,7 @@ exports.addanim = (req, res) => {
                 poids: req.body.poids,
                 taille: req.body.taille,
                 race: req.body.race,
-              
+                image:imageLink,
                 Description: req.body.Description,
                 type_animal: {
                     typename: req.body.typename,
