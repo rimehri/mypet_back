@@ -43,7 +43,7 @@ exports.register = async (req, res) => {
     if (PhoneExist ||  EmailExist)  {
         return res.status(400).json({ message: 'Phone exist or email existe' });
     }
-    const resetCode = Math.floor(Math.random() * 9999);
+    const resetCode = Math.floor(1000+Math.random() * 9000);
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
         email: req.body.email,
