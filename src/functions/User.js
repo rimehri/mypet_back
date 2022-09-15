@@ -216,6 +216,9 @@ exports.deleteAccount = (req, res) => {
 exports.getUser = (req, res) => {
     searchUser(req, res, req.params.id);
 };
+exports.getuserbyphone = (req, res) => {
+    searchUserbyphone(req, res, req.params.phone);
+};
 exports.updateProfile = (req, res) => {
     var imageLink = "";
     if (req.file) {
@@ -326,6 +329,20 @@ exports.removeanimal = (req, res) => {
  */
  function searchUser(req, res, id) {
     User.findById(id)
+        .exec()
+        .then((doc) => {
+            if (doc) {
+                return res.status(200).json(doc);
+            } else {
+                return res.status(404).json({ message: "404 NOT FOUND" });
+            }
+        })
+        .catch((error) => {
+            return res.status(error.code).json({ error: error });
+        });
+}
+function searchUserbyphone(req, res, phone) {
+    User.findOne(phone)
         .exec()
         .then((doc) => {
             if (doc) {

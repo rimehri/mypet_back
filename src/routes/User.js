@@ -1,4 +1,4 @@
-const {register,verifCode, showalluser,activateAccount,login,forgetPassword,resetPassword,updatePassword,deleteAccount,getUser,updateProfile,addanim,editeanimal,removeanimal} = require ("../functions/User");
+const {register,getuserbyphone,verifCode, showalluser,activateAccount,login,forgetPassword,resetPassword,updatePassword,deleteAccount,getUser,updateProfile,addanim,editeanimal,removeanimal} = require ("../functions/User");
 const express = require('express');
 const { upload } = require("../utils/multerConfig");
 const router = express.Router();
@@ -16,4 +16,5 @@ router.post('/addanim',addanim);
 router.patch('/editeanimal',editeanimal);
 router.delete('/removeanimal',removeanimal);
 router.get('/verifCode',verifCode);
+router.get('/getuserbyphone',getuserbyphone);
 module.exports = router;
