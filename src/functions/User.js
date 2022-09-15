@@ -123,6 +123,22 @@ exports.activateAccount = async (req, res) => {
         return res.status(400).json({ message: "Invalid verification code" });
     }
 };
+exports.verifCode = async (req, res) => {
+    const code = req.body.code;
+    const user = await User.findOne({ phone: req.body.phone });
+    if (!user) {
+        return res.status(400).json({ message: 'phone does not exist' });
+    }
+    if (user.resetCode === code) {
+     {
+            
+            return res.status(200).json({ message: "Code Succ" });
+        }
+    }
+    else {
+        return res.status(400).json({ message: "Invalid verification code" });
+    }
+};
 exports.login = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
@@ -157,6 +173,7 @@ exports.forgetPassword = async (req, res) => {
         return res.status(200).json({ message: "Reset code sent successfully" });
     });
 };
+
 exports.resetPassword = async (req, res) => {
     const user = await User.findOne({ phone: req.body.phone });
     if (!user) {
