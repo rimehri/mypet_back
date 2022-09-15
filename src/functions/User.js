@@ -325,7 +325,7 @@ exports.removeanimal = (req, res) => {
  * @param req : request
  * @param res : response
  * @param id : id user
- * @param phone : phone user
+
  * we needd it t
  */
  function searchUser(req, res, id) {
@@ -342,6 +342,14 @@ exports.removeanimal = (req, res) => {
             return res.status(error.code).json({ error: error });
         });
 }
+/**
+ * to get user by phone
+ * @param req : request
+ * @param res : response
+
+ * @param phone : phone user
+ * we needd it t
+ */
 function searchUserbyphone(req, res, phone) {
     User.findOne(phone)
         .exec()
