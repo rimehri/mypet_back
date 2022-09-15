@@ -325,6 +325,7 @@ exports.removeanimal = (req, res) => {
  * @param req : request
  * @param res : response
  * @param id : id user
+ * @param phone : phone user
  * we needd it t
  */
  function searchUser(req, res, id) {
