@@ -25,6 +25,7 @@ exports.addannonce= (req, res) => {
       description: req.body.description,
       type: req.body.type,
       prix: req.body.prix,
+      date_creation: req.body.date_creation,
       categorie: req.body.categorie,
       photos: req.body.photos,
       user:   req.body.user ,
