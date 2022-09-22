@@ -9,6 +9,7 @@ exports.addannonce= (req, res) => {
       idUser: req.body.idUser,
       description: req.body.description,
       type: req.body.type,
+      prix: req.body.prix,
       categorie: req.body.categorie,
       photos: req.body.photos,
       user:   req.body.user ,
@@ -42,6 +43,7 @@ exports.updateannonce = (req, res) => {
         {
             $set: {
                 Titre:req.body.Titre,
+                prix:req.body.prix,
                description:req.body.description,
                type:req.body.type,
                categorie:req.body.categorie,
