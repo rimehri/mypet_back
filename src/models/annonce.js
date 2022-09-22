@@ -5,6 +5,7 @@ const annonceScema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     user: { type: String, require: true },
     Titre: { type: String, require: false },
+    prix: { type: String, require: false },
     description: { type: String, require: false },
     type: { type: String, require: false },
     categorie:{type:String,require: true  },

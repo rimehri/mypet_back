@@ -202,6 +202,18 @@ exports.updatePassword = async (req, res) => {
         return res.status(200).json({ message: "Password updated successfully" });
     });
 };
+exports.gedt = async (req, res) => {
+    const user = await User.findOne({ phone: req.body.phone });
+    if (!user) {
+        return res.status(400).json({ message: 'phone does not exist' });
+    }
+    User.findOneAndUpdate({ phone: req.body.phone }, { $set: { password: bcrypt.hashSync(req.body.password, 10) } }, function (error, user) {
+        if (error) {
+            return res.status(error.code).json(error);
+        }
+        return res.status(200).json({ message: "Password updated successfully" });
+    });
+};
 exports.deleteAccount = (req, res) => {
     const id = req.body.id;
     User.remove({ _id: id })

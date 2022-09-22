@@ -2,6 +2,21 @@ const express = require('express');
 const mongoose = require("mongoose");
 const router = express.Router();
 const Annonce = require('../models/annonce');
+const winston = require ('winston');
+const logger = winston.createLogger({
+    level:'info',
+    transports: [
+        new winston.transports.Console({
+            format:winston.format.combine(
+                winston.format.colorize({all:true})
+            )
+        }),
+        new winston.transports.File({filename:'error.log',level:'error'})
+    ],
+    exceptionHandlers:[
+        new winston.transports.File({filename:'exception.log'})
+    ]
+});
 exports.addannonce= (req, res) => {
     annonce = new Annonce({
       _id: new mongoose.Types.ObjectId(),
@@ -22,7 +37,9 @@ exports.addannonce= (req, res) => {
         res.send(annonce);
       })
       .catch((error) => {
-        res.status(500).send("annonce was not stored in db");
+       // res.status(error.code).json({error: error});
+       res.status(500).send("annonce was not stored in db");
+       logger.error(error.message);
       });
   };
   exports.getall = (req, res,next) =>{
