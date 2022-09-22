@@ -11,7 +11,7 @@ const annonceScema = new mongoose.Schema({
     categorie:{type:String,require: true  },
     photos:[{imagename:{type:String}}],
     date_creation:{
-        type:Date,
+        type:String,
         require:false,
         
     },
