@@ -10,6 +10,7 @@ const ejs = require('ejs');
 const path = require("path");
 require('dotenv').config();
 const { loggers } = require('winston');
+const { ObjectId } = require('mongodb');
 var sid = process.env.sid ; 
 var auth_token = process.env.auth_token ;
 const twilio = require('twilio')(sid,auth_token);
@@ -354,6 +355,18 @@ exports.removeanimal = (req, res) => {
             return res.status(error.code).json({ error: error });
         });
 }
+
+exports.getAnimal = (req, res) =>{
+   
+    User.findOne({_id: req.body.id, 'animal._id': req.body.animal} )
+    User.findOne({_id: req.body.id}).select({ animal: {$elemMatch: {_id: req.body.animal}}}).exec().then(event => {
+ 
+    console.log(event);
+    res.status(200).json(event);
+}).catch(error => {
+    console.log(error);
+    res.status(error.code).json(error);
+});};
 /**
  * to get user by phone
  * @param req : request
