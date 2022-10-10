@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const Annonce = require('../models/annonce');
 const winston = require ('winston');
+
 const logger = winston.createLogger({
     level:'info',
     transports: [
@@ -25,7 +26,7 @@ exports.addannonce= (req, res) => {
       description: req.body.description,
       type: req.body.type,
       prix: req.body.prix,
-      date_creation: req.body.date_creation,
+      date_creation: Date.now(),
       categorie: req.body.categorie,
       photos: req.body.photos,
       user:   req.body.user ,
