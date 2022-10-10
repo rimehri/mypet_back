@@ -89,7 +89,7 @@ exports.removeannonce = (req, res) => {
 };
 exports.getmesannonce = (req, res) => {
     Annonce.find(
-        {user:req.body.user}).exec().then(result => {
+        {user:req.params.user}).exec().then(result => {
         return res.status(200).json(result);
     }).catch(error => {
         logger.error(error.message);

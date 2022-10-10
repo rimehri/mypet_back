@@ -10,7 +10,7 @@ router.post('/add', addannonce);
 router.get('/getall', getall);
 router.delete('/removeannonce', removeannonce);
 router.patch('/updateannonce', updateannonce);
-router.get('/getmesannonce/', getmesannonce);
+router.get('/getmesannonce/:user', getmesannonce);
 router.get('/getdemande', getdemande);
 router.get('/getoffre', getoffre);
 module.exports = router;

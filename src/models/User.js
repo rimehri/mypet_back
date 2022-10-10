@@ -58,6 +58,8 @@ const userSchema = mongoose.Schema({
 role:[{
 rolename: {type:String},
 }],
+
+
   image: { type: String, default: "animal.png" },
   resetCode: { type: Number, require: false },
   isActive: { type: Boolean, default: false },
