@@ -53,9 +53,8 @@ exports.register = async (req, res) => {
         phone:req.body.phone,
         addresse:req.body.addresse,
         gender: req.body.gender,
-        role:{
-            rolename: req.body.rolename,
-          },
+        rolename: req.body.rolename,
+         
         
     
         resetCode: resetCode

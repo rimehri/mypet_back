@@ -55,9 +55,8 @@ const userSchema = mongoose.Schema({
   image: { type: String, default: "animal.png" },
   type_animal :TypeAnimal.schema,
 }],
-role:[{
+
 rolename: {type:String},
-}],
 
 
   image: { type: String, default: "animal.png" },
