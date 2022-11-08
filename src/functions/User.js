@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
-
+const { JWT_SECRET } = require("../config/keys");
+const jwt = require('jsonwebtoken') 
 const express = require('express');
 const fs = require('fs');
 const router = express.Router();
@@ -151,7 +152,12 @@ exports.login = async (req, res) => {
     if (!user.isActive) {
         return res.status(400).send({ message: 'Account is disabled' });
     }
-    return await res.status(200).json(user);
+    if(user){
+        let token = jwt.sign({_id:user._id,rolename:user.rolename},JWT_SECRET);
+        const encode = jwt.verify(token, JWT_SECRET);
+        return  res.status(200).json({token:token, user:encode,user});
+    }
+    return res.status(400).json({ message: 'somthing failed' });
 };
 exports.forgetPassword = async (req, res) => {
     const phoneExist = await User.findOne({ phone: req.body.phone });
