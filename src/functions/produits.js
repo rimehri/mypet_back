@@ -87,18 +87,15 @@ exports.deleteImages= async (images, mode)=> {
         }
       };
 
-     exports.getAllProduct= async (req, res)=> {
-        try {
-          let Products = await productModel
-            .find({})
-        
-            .sort({ _id: -1 });
-          if (Products) {
-            return res.json({ Products });
-          }
-        } catch (err) {
-          console.log(err);
-        }
+     exports.getAllProduct= async (req, res,next)=> {
+      productModel.find().exec().then(product => {
+        console.log(product);
+        res.status(200).json(product);
+        return next();
+    }).catch(error => {
+        console.log(error);
+        res.status(error.code).json({error: error});
+    });
       }
 
   exports.postEditProduct = async (req, res) => {
