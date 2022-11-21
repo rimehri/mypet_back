@@ -3,9 +3,13 @@ const session = require ('express-session');
 const mongoose = require("mongoose");
 const animalroute = require ('./src/routes/animal');
 const winston = require ('winston');
+
 const userroute = require ('./src/routes/User');
 const annonceroute = require ('./src/routes/annonce');
+const categorieroute =  require ('./src/routes/Categorie');
 const produitroute = require ('./src/routes/produit');
+const cartroute = require ('./src/routes/Cart');
+const expressValidator = require("express-validator");
 const app = express();
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
@@ -16,11 +20,12 @@ require('dotenv').config();
 // Import Auth middleware for check user login or not~
 const { loginCheck } = require("./src/middleware/auth");
 
-
+const CreateAllFolder = require("./src/config/uploadFolderCreateScript");
 //middlewares
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(cors());
+app.use(expressValidator())
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -29,6 +34,8 @@ app.use('/animals',animalroute);
 app.use('/annonce',annonceroute);
 app.use('/user',userroute);
 app.use('/produit',produitroute);
+app.use('/Categorie',categorieroute);
+app.use('/cart',cartroute);
 const logger = winston.createLogger({
     level:'info',
     transports: [
@@ -43,6 +50,9 @@ const logger = winston.createLogger({
         new winston.transports.File({filename:'exception.log'})
     ]
 });
+
+/* Create All Uploads Folder if not exists | For Uploading Images */
+CreateAllFolder();
 //connect to mongodb atlas
 mongoose.connect(process.env.MONGO_URL,
 

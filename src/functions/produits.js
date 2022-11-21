@@ -1,12 +1,26 @@
 
-const { loggers } = require('winston');
 const fs = require("fs");
 const path = require("path");
+const winston = require ('winston');
 const productModel = require ("../models/Ecommerce/product")
-
+const { loggers } = require('winston');
+const logger = winston.createLogger({
+  level:'info',
+  transports: [
+      new winston.transports.Console({
+          format:winston.format.combine(
+              winston.format.colorize({all:true})
+          )
+      }),
+      new winston.transports.File({filename:'error.log',level:'error'})
+  ],
+  exceptionHandlers:[
+      new winston.transports.File({filename:'exception.log'})
+  ]
+});
 exports.deleteImages= async (images, mode)=> {
         var basePath =
-          path.resolve(__dirname + "../../") + "/uploads/products/";
+        path.resolve(__dirname + "../../") + "/public/uploads/products/";
         console.log(basePath);
         for (var i = 0; i < images.length; i++) {
           let filePath = "";
@@ -57,7 +71,7 @@ exports.deleteImages= async (images, mode)=> {
           });
         }
         // Validate Images
-        else if (images.length !== 2) {
+        else if (images.length < 2) {
         this.deleteImages(images, "file");
           return res.json({ error: "Must need to provide 2 images" });
         } else {

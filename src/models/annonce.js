@@ -3,7 +3,7 @@ const { date } = require('yup/lib/locale');
 // categorie annonce Schema
 const annonceScema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    user: { type: String, require: true },
+    user: { type: ObjectId, ref: "User" },
     Titre: { type: String, require: false },
     prix: { type: Number, require: false },
     description: { type: String, require: false },

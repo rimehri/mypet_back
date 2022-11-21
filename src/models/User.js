@@ -56,12 +56,12 @@ const userSchema = mongoose.Schema({
   type_animal :TypeAnimal.schema,
 }],
 
-rolename: {type:String},
+rolename: {type:String,default:"propritaire"},
 
 
   image: { type: String, default: "animal.png" },
   resetCode: { type: Number, require: false },
   isActive: { type: Boolean, default: false },
-});
+},{timestamps:true});
 
 module.exports = mongoose.model("User", userSchema);

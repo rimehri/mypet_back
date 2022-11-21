@@ -1,11 +1,12 @@
 const bcrypt = require('bcrypt');
 const { JWT_SECRET } = require("../config/keys");
-const jwt = require('jsonwebtoken') 
+const jwt = require('jsonwebtoken') // to generate signed token 
 const express = require('express');
 const fs = require('fs');
 const router = express.Router();
 const mailer = require('nodemailer');
 const mongoose = require('mongoose');
+const expressJwt = require("express-jwt"); // for authorization check 
 const User = require('../models/User');
 const ejs = require('ejs');  
 const path = require("path");
@@ -61,6 +62,7 @@ exports.register = async (req, res) => {
         resetCode: resetCode
     });
     const newUser = await user.save();
+    newUser.password= undefined; 
     if (newUser) {
       /* let mailOptions = {
             from: 'rimeh.berrichi@esprit.tn',
@@ -69,6 +71,7 @@ exports.register = async (req, res) => {
             text: 'Here is your verification code: ' + resetCode
         };*/
         sendsms(req.body.phone,'Here is your verification code: ' + resetCode); 
+      
         return res.status(201).json(newUser);
     
     }
@@ -141,9 +144,9 @@ exports.verifCode = async (req, res) => {
     }
 };
 exports.login = async (req, res) => {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ phone: req.body.phone });
     if (!user) {
-        return res.status(400).json({ message: 'E-mail does not exist' });
+        return res.status(400).json({ message: 'phone does not exist' });
     }
     const verifyPassword = await bcrypt.compare(req.body.password, user.password);
     if (!verifyPassword) {
@@ -153,8 +156,11 @@ exports.login = async (req, res) => {
         return res.status(400).send({ message: 'Account is disabled' });
     }
     if(user){
+        // if user is found generate a signed token with user id and secret
         let token = jwt.sign({_id:user._id,rolename:user.rolename},JWT_SECRET);
         const encode = jwt.verify(token, JWT_SECRET);
+        res.cookie("t",token,{expire:new Date()+9999}); 
+        user.password= undefined;
         return  res.status(200).json({token:token, user:encode,user});
     }
     return res.status(400).json({ message: 'somthing failed' });
@@ -265,6 +271,11 @@ exports.updateProfile = (req, res) => {
             
         });
 };
+exports.signout = (req,res) => {
+    res.clearCookie("t"); 
+    res.json({message:"signout success"}); 
+
+}
 exports.addanim = (req, res) => {
     var imageLink = "";
     if (req.file) {

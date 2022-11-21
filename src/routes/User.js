@@ -1,5 +1,5 @@
-const {register ,getAnimal,getuserbyphone,verifCode, showalluser,activateAccount,login,forgetPassword,resetPassword,updatePassword,deleteAccount,getUser,updateProfile,addanim,editeanimal,removeanimal} = require ("../functions/User");
-
+const {register,signout ,getAnimal,getuserbyphone,verifCode, showalluser,activateAccount,login,forgetPassword,resetPassword,updatePassword,deleteAccount,getUser,updateProfile,addanim,editeanimal,removeanimal} = require ("../functions/User");
+const {isAdmin} = require ('../middleware/auth')
 const express = require('express');
 const { upload } = require("../utils/multerConfig");
 const router = express.Router();
@@ -19,4 +19,5 @@ router.delete('/removeanimal',removeanimal);
 router.get('/verifCode',verifCode);
 router.get('/getuserbyphone',getuserbyphone);
 router.get('/getAnimal/',getAnimal);
+router.get('/signout',signout);
 module.exports = router;

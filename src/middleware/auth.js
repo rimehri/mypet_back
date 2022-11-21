@@ -30,9 +30,9 @@ exports.isAuth = (req, res, next) => {
 };
 
 exports.isAdmin = async (req, res, next) => {
-  try {
+  try { 
     let reqUser = await userModel.findById(req.body.loggedInUserId);
-    // If user role 0 that's mean not admin it's customer
+   
     if (reqUser.rolename =!"vendeur") {
       res.status(403).json({ error: "Access denied" });
     }
