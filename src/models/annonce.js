@@ -1,5 +1,6 @@
 const mongoose = require ('mongoose');
 const { date } = require('yup/lib/locale');
+const { ObjectId } = mongoose.Schema.Types;
 // categorie annonce Schema
 const annonceScema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
