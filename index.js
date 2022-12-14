@@ -1,5 +1,5 @@
 const express = require ('express');
-const session = require ('express-session');
+
 const mongoose = require("mongoose");
 const animalroute = require ('./src/routes/animal');
 const winston = require ('winston');
@@ -14,7 +14,7 @@ const app = express();
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const jwt = require('jsonwebtoken') 
+
 const PORT  = process.env.PORT || 5000
 require('dotenv').config();
 // Import Auth middleware for check user login or not~
@@ -22,6 +22,7 @@ const { loginCheck } = require("./src/middleware/auth");
 
 const CreateAllFolder = require("./src/config/uploadFolderCreateScript");
 //middlewares
+app.use('/profile', express.static('upload/images')); 
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(cors());
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 //routes
 app.use('/animals',animalroute);
+
 app.use('/annonce',annonceroute);
 app.use('/user',userroute);
 app.use('/produit',produitroute);
@@ -50,6 +52,11 @@ const logger = winston.createLogger({
         new winston.transports.File({filename:'exception.log'})
     ]
 });
+
+
+app.use('/profile', express.static('././src/public/uploads/animal'));
+
+
 
 /* Create All Uploads Folder if not exists | For Uploading Images */
 CreateAllFolder();

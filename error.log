@@ -10,4 +10,4 @@
 {"code":"ENOENT","errno":-4058,"level":"error","path":"C:\\Users\\rimeh\\Desktop\\ditriot\\my_pets\\src\\uploads\\products\\1668524111589_expressfood_mpd.png","syscall":"unlink"}
 {"code":"ENOENT","errno":-4058,"level":"error","path":"C:\\Users\\rimeh\\Desktop\\ditriot\\my_pets\\src\\uploads\\products\\1668524135516_70392290_147363999840762_6463738773308964864_n.jpg","syscall":"unlink"}
 {"code":"ENOENT","errno":-4058,"level":"error","path":"C:\\Users\\rimeh\\Desktop\\ditriot\\my_pets\\src\\uploads\\products\\1668524135520_245608003_1027598301371615_6097186096757557702_n.jpg","syscall":"unlink"}
-//
+//{"level":"error","message":"queryTxt ETIMEOUT cluster0.v6w3obz.mongodb.net"}

@@ -14,6 +14,8 @@ exports.showallanimal = (req, res,next) =>{
     });
 };
 exports.Addanimal= (req, res) => {
+  let cImage = req.file.filename;
+  const filePath = `../MY_PETS/public/uploads/categories/${cImage}`;
     animal = new Animal({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
@@ -23,6 +25,7 @@ exports.Addanimal= (req, res) => {
       poids: req.body.poids,
       taille: req.body.taille,
       race: req.body.race,
+      imageanimal: cImage ,
       Description: req.body.Description,
   
       type_animal: {
@@ -38,3 +41,8 @@ exports.Addanimal= (req, res) => {
         res.status(500).send("Animal was not stored in db");
       });
   };
+  //Gridfs-Strorage-uploading to mangodb storage
+  //Grid-stream :Stream data into and out of this storage
+  //Crypto this will generate bytes 
+  //multer aids in uploading multipart/format to nodejs
+

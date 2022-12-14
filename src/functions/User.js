@@ -277,12 +277,19 @@ exports.signout = (req,res) => {
 
 }
 exports.addanim = (req, res) => {
-    var imageLink = "";
-    if (req.file) {
-        imageLink = process.env.BASE_URL + "uploads/" + req.file.filename;
-    }
- 
-  
+
+    image = req.file.filename;
+    const filePath = `././src/public/uploads/animal/${image}`;
+     
+   
+    if ( !image) {
+       fs.unlink(filePath, (err) => {
+         if (err) {
+           console.log(err);
+         }
+         return res.json({ error: "All filled must be required" });
+       });}
+       else 
 
     User.findOneAndUpdate({ _id: req.body.id }, {
         $addToSet: {
@@ -295,7 +302,7 @@ exports.addanim = (req, res) => {
                 poids: req.body.poids,
                 taille: req.body.taille,
                 race: req.body.race,
-                image:imageLink,
+                image: `http://localhost:5000/profile/${image}`,
                 Description: req.body.Description,
                 type_animal: {
                     typename: req.body.typename,
