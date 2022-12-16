@@ -52,7 +52,7 @@ const userSchema = mongoose.Schema({
       require:false,
       
   },
-  image: { type: String, default: "animal.png" },
+  image: { type: String, default: "avatar.jpg" },
   type_animal :TypeAnimal.schema,
 }],
 

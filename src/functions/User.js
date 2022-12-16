@@ -302,7 +302,7 @@ exports.addanim = (req, res) => {
                 poids: req.body.poids,
                 taille: req.body.taille,
                 race: req.body.race,
-                image: `http://localhost:5000/profile/${image}`,
+                image: `http://51.75.87.48:14600/profile/${image}`,
                 Description: req.body.Description,
                 type_animal: {
                     typename: req.body.typename,
