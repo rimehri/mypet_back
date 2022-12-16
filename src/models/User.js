@@ -53,7 +53,11 @@ const userSchema = mongoose.Schema({
       
   },
   image: { type: String, default: "avatar.jpg" },
-  type_animal :TypeAnimal.schema,
+  type_animal :{
+    type:mongoose.Schema.Types.ObjectId,
+    ref: 'typeaniaml',
+    required: false
+  },
 }],
 
 rolename: {type:String,default:"propritaire"},

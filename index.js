@@ -9,6 +9,7 @@ const annonceroute = require ('./src/routes/annonce');
 const categorieroute =  require ('./src/routes/Categorie');
 const produitroute = require ('./src/routes/produit');
 const cartroute = require ('./src/routes/Cart');
+const typeroute = require ('./src/routes/type_animal');
 const expressValidator = require("express-validator");
 const app = express();
 const morgan = require("morgan");
@@ -33,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 //routes
 app.use('/animals',animalroute);
-
+app.use('/type',typeroute);
 app.use('/annonce',annonceroute);
 app.use('/user',userroute);
 app.use('/produit',produitroute);
