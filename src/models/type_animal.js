@@ -7,6 +7,16 @@ const TypeAniamlSchema = new mongoose.Schema({
         require:true,
         
     },
+    sousType: [{
+        _id: mongoose.Schema.Types.ObjectId,
+        name:{
+          type:String,
+          require:true,
+          
+      },
+  
+     
+    }],
     
 
 

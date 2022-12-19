@@ -1,13 +1,13 @@
 const express = require('express');
-const { type } = require('express/lib/response');
+
 const mongoose = require("mongoose");
 const router = express.Router();
-const type_animal = require('../models/type_animal');
-
+const type = require('../models/type_animal');
+//Gestion Type Animal (chat /cheien...)
 exports.showalltype = (req, res,next) =>{
-    type_animal.find().exec().then(type => {
+    type.find().exec().then(type => {
         console.log(type);
-        res.status(200).json(animal);
+        res.status(200).json(type);
         return next();
     }).catch(error => {
         console.log(error);
@@ -16,22 +16,48 @@ exports.showalltype = (req, res,next) =>{
 };
 exports.Addtype= (req, res) => {
  
-    type = new type_animal({
+    type2 = new type({
       _id: new mongoose.Types.ObjectId(),
-      name: req.body.name,
+      typename: req.body.typename,
      
     });
-    type
+    type2
       .save()
-      .then((type) => {
-        res.send(type);
+      .then((type2) => {
+        res.send(type2);
       })
       .catch((error) => {
         res.status(500).send("Animal was not stored in db");
       });
   };
-  //Gridfs-Strorage-uploading to mangodb storage
-  //Grid-stream :Stream data into and out of this storage
-  //Crypto this will generate bytes 
-  //multer aids in uploading multipart/format to nodejs
 
+  exports.removetype = (req, res) => {
+    const id = req.body.id;
+    type.remove({ _id: id })
+        .exec()
+        .then((result) => {
+            return res.status(200).json(result);
+        })
+        .catch((error) => {
+            return res.status(error.code).json({ error: error });
+        });
+};
+//Gestion sous Type (Race :chien berger ,labrador.....)
+exports.addRace = (req, res) => {
+  type.findOneAndUpdate({ _id: req.body._id }, {
+      $addToSet: {
+        sousType: [{
+              _id: new mongoose.Types.ObjectId(),
+              name: req.body.name,
+             
+
+          }],
+      }
+  }, function (error, result) {
+      if (error) {
+          console.log(req.body);
+          return res.status(error.code).json({ error: error });
+      }
+      return res.status(200).json(result);
+  });
+};
