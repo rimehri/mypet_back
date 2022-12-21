@@ -61,3 +61,28 @@ exports.addRace = (req, res) => {
       return res.status(200).json(result);
   });
 };
+/**
+ * to get type by id
+ * @param req : request
+ * @param res : response
+ * @param typename : typename
+
+ * we needd it t
+ */
+function searchType(req, res, typename) {
+    type.findOne(typename)
+        .exec()
+        .then((doc) => {
+            if (doc) {
+                return res.status(200).json(doc);
+            } else {
+                return res.status(404).json({ message: "404 NOT FOUND" });
+            }
+        })
+        .catch((error) => {
+            return res.status(error.code).json({ error: error });
+        });
+}
+exports.getType = (req, res) => {
+    searchType(req, res, req.params.typename);
+};
