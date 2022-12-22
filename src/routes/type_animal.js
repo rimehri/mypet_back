@@ -17,3 +17,5 @@ router.get("/getType/:typename", getType);
 router.post("/addRace",addRace);
 
 module.exports = router;
+//search with name restAPI? 
+

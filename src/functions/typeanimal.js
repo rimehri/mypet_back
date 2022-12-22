@@ -1,8 +1,24 @@
+const { name } = require('ejs');
 const express = require('express');
-
+const winston = require ('winston');
 const mongoose = require("mongoose");
 const router = express.Router();
 const type = require('../models/type_animal');
+const logger = winston.createLogger({
+    level:'info',
+    transports: [
+        new winston.transports.Console({
+            format:winston.format.combine(
+                winston.format.colorize({all:true})
+            )
+        }),
+        new winston.transports.File({filename:'error.log',level:'error'})
+    ],
+    exceptionHandlers:[
+        new winston.transports.File({filename:'exception.log'})
+    ]
+});
+
 //Gestion Type Animal (chat /cheien...)
 exports.showalltype = (req, res,next) =>{
     type.find().exec().then(type => {
@@ -62,15 +78,17 @@ exports.addRace = (req, res) => {
   });
 };
 /**
- * to get type by id
+ * to get user by phone
  * @param req : request
  * @param res : response
- * @param typename : typename
 
+ * @param typename : typename 
  * we needd it t
  */
-function searchType(req, res, typename) {
-    type.findOne(typename)
+
+function searchType(req, res,typename) {
+
+    type.find({typename})
         .exec()
         .then((doc) => {
             if (doc) {
@@ -80,9 +98,9 @@ function searchType(req, res, typename) {
             }
         })
         .catch((error) => {
-            return res.status(error.code).json({ error: error });
+            logger.error(error.message);
         });
-}
+  };
 exports.getType = (req, res) => {
     searchType(req, res, req.params.typename);
 };
