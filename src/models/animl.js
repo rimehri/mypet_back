@@ -47,7 +47,7 @@ const AnimalSchema = new mongoose.Schema({
         require:false,
         
     },
- type_animal :TypeAnimal.schema,
+ type_animal :{type:String},
 
 
 

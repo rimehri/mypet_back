@@ -13,3 +13,4 @@
 //{"level":"error","message":"queryTxt ETIMEOUT cluster0.v6w3obz.mongodb.net"}
 {"level":"error","message":"Parameter \"filter\" to find() must be an object, got chat"}
 {"level":"error","message":"Parameter \"filter\" to find() must be an object, got chat"}
+{"level":"error","message":"annonce validation failed: prix: Cast to Number failed for value \"bbv\" (type string) at path \"prix\""}

@@ -10,12 +10,27 @@ const expressJwt = require("express-jwt"); // for authorization check
 const User = require('../models/User');
 const ejs = require('ejs');  
 const path = require("path");
+const winston = require ('winston');
 require('dotenv').config();
 const { loggers } = require('winston');
 const { ObjectId } = require('mongodb');
 var sid = process.env.sid ; 
 var auth_token = process.env.auth_token ;
 const twilio = require('twilio')(sid,auth_token);
+const logger = winston.createLogger({
+    level:'info',
+    transports: [
+        new winston.transports.Console({
+            format:winston.format.combine(
+                winston.format.colorize({all:true})
+            )
+        }),
+        new winston.transports.File({filename:'error.log',level:'error'})
+    ],
+    exceptionHandlers:[
+        new winston.transports.File({filename:'exception.log'})
+    ]
+});
 const sendsms= (phone,message)=>{
     twilio.messages.create({
 from:'+12243282744',
@@ -304,16 +319,16 @@ exports.addanim = (req, res) => {
                 race: req.body.race,
                 image: `http://51.75.87.48:14600/profile/${image}`,
                 Description: req.body.Description,
-                type_animal: {
-                    typename: req.body.typename,
-                  },
+                
+             type_animal: req.body.type_animal,
+                  
 
             }],
         }
     }, function (error, result) {
         if (error) {
             console.log(req.body);
-            return res.status(error.code).json({ error: error });
+            return   logger.error(error.message);
         }
         return res.status(200).json(result);
     });
