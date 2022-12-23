@@ -1,25 +1,25 @@
-const mongoose = require("mongoose");
 
-const categorySchema = new mongoose.Schema(
-  {
-    cName: {
-      type: String,
-      required: true,
-    },
-    cDescription: {
-      type: String,
-      required: true,
-    },
-    cImage: {
-      type: String,
-    },
-    cStatus: {
-      type: String,
-      required: true,
-    },
-  },
-  { timestamps: true }
-);
+const mongoose = require ('mongoose');
 
-const categoryModel = mongoose.model("Categorie", categorySchema);
-module.exports = categoryModel;
+// categorie animal Schema
+const categorySchema = new mongoose.Schema({
+ 
+    Name:{
+        type:String,
+        require:true,
+        
+    },
+
+        Status:{
+          type: Boolean, default: false
+          
+      },
+  
+     
+    
+    
+
+
+
+});
+module.exports = new mongoose.model('Categorie',categorySchema);

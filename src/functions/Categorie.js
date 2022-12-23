@@ -3,38 +3,22 @@ const express = require('express');
 const mongoose = require("mongoose");
 const router = express.Router();
 
-const Categorie = require ('../models/Ecommerce/categories')
+const Categorie = require ('../models/Ecommerce/categories');
+
+
 exports.AddCategorie = async (req, res) =>{
-  let { cName, cDescription, cStatus } = req.body;
-
-
-  if (!cName || !cDescription || !cStatus ) {
+  type2 = new Categorie({
+    _id: new mongoose.Types.ObjectId(),
+    Name: req.body.Name,
+    Status:req.body.Status,
    
-      return res.json({ error: "All filled must be required" });
-   
-  } else {
-    cName = toTitleCase(cName);
-    try {
-      let checkCategoryExists = await categoryModel.findOne({ cName: cName });
-      if (checkCategoryExists) {
-      
-          return res.json({ error: "Category already exists" });
-     
-      } else {
-        let newCategory = new categoryModel({
-          cName,
-          cDescription,
-          cStatus,
-          cImage,
-        });
-        await newCategory.save((err) => {
-          if (!err) {
-            return res.json({ success: "Category created successfully" });
-          }
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  });
+  type2
+    .save()
+    .then((type2) => {
+      res.send(type2);
+    })
+    .catch((error) => {
+      res.status(500).send("Categorie was not stored in db");
+    });
 }
